@@ -1,0 +1,8 @@
+# News
+# History
+# Weather
+# Reminders or alarm
+# Controlling songs 
+# Controlling browser 
+# Dynamically adding new questions 
+# Changeing backgrounds 
