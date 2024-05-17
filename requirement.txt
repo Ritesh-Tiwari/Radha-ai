@@ -1,0 +1,13 @@
+beautifulsoup4==4.12.3
+certifi==2024.2.2
+charset-normalizer==2.0.12
+idna==3.7
+pkg-resources==0.0.0
+PyAudio==0.2.14
+python-vlc==3.0.20123
+pyttsx3==2.90
+requests==2.27.1
+soupsieve==2.3.2.post1
+SpeechRecognition==3.9.0
+urllib3==1.26.18
+wikipedia==1.4.0
