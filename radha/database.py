@@ -39,4 +39,48 @@ def insert_question_and_answer(question, answer):
     con.commit()
         
 # print(get_ans_from_memory("name"))  
-# insert_question_and_answer("check internet connection",'check internet connection')
+# insert_question_and_answer("what is date",'tell date')
+
+def get_name():
+    con = create_connection()
+    cur = con.cursor()
+
+    # Get assistant name
+    query = "select value from memory where name ='assistant_name'"
+    cur.execute(query)
+    return cur.fetchall()[0][0]
+
+
+def update_name(new_name):
+    con = create_connection()
+    cur = con.cursor()
+
+    # Get assistant name
+    query = "update memory set value = '"+new_name+"' where name='assistant_name'"
+    cur.execute(query)
+    con.commit()
+    
+# update_name("ram")
+# print(get_name())
+
+def updates_last_seen(last_seen_date):
+    con = create_connection()
+    cur = con.cursor()
+
+    # Get assistant name
+    query = "update memory set value = '"+str(last_seen_date)+"' where name='last_seen_date'"
+    cur.execute(query)
+    con.commit()
+
+
+def get_last_seen():
+    con = create_connection()
+    cur = con.cursor()
+
+    # Get assistant name
+    query = "select value from memory where name ='last_seen_date'"
+    cur.execute(query)
+    return str(cur.fetchall()[0][0])
+    
+
+
