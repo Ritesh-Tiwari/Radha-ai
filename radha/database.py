@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import sql
+from internet import check_internet_connection
 
 def create_connection():
     # Connect to the PostgreSQL server
@@ -84,3 +85,35 @@ def get_last_seen():
     
 
 
+def turn_on_speech():
+    if (check_internet_connection()):
+        con = create_connection()
+        cur = con.cursor()
+        query = "update memory set value = 'on' where name='speech'"
+        cur.execute(query)
+        con.commit()
+        return "okay i will speak now"
+    else:
+        return "Hey please turn on internet first"
+    
+
+def turn_off_speech():
+    con = create_connection()
+    cur = con.cursor()
+    query = "update memory set value = 'off' where name='speech'"
+    cur.execute(query)
+    con.commit()
+    return "okay i won't speak"
+    
+
+def speak_is_on():
+    con = create_connection()
+    cur = con.cursor()
+    query = "select value from memory where name='speech'"
+    cur.execute(query)
+    ans = str(cur.fetchall()[0][0])
+
+    if ans == "on":
+        return True
+    else:
+        return False

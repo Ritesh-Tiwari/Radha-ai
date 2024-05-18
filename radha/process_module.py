@@ -1,6 +1,6 @@
 from output_module import output
 from time_module import get_time, get_date
-from database import get_ans_from_memory, insert_question_and_answer,update_name
+from database import *
 from input_module import take_input
 from internet import check_internet_connection, check_on_wikipedia
 import assistant_details
@@ -20,6 +20,12 @@ def process(query):
         else :
             return "internet is not connected"
     
+    elif answer == "on speak":
+        return turn_on_speech()
+
+    elif answer == 'off speak':
+        return turn_off_speech()
+     
     elif answer == "change name":
         output ("Okay! what to you want to call me")
         temp = take_input()
