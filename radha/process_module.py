@@ -4,7 +4,7 @@ from database import *
 from input_module import take_input
 from internet import check_internet_connection, check_on_wikipedia
 import assistant_details
-
+from web_job import *
 
 def process(query):
     answer = get_ans_from_memory(query)
@@ -23,9 +23,24 @@ def process(query):
     elif answer == "on speak":
         return turn_on_speech()
 
-    elif answer == 'off speak':
+    elif answer == "off speak":
         return turn_off_speech()
-     
+
+    elif answer == "open facebook":
+        open_facebook()
+        return "opening facebook"
+    
+    elif answer == "open google":
+        open_google()
+        return "opening google"
+    
+    elif answer == "open browser":
+        open_google()
+        return "opening browser"
+    elif answer == "close browser":
+        close_browser()
+        return "closing browser"
+    
     elif answer == "change name":
         output ("Okay! what to you want to call me")
         temp = take_input()

@@ -5,4 +5,3 @@ def speak(text):
     tts = gTTS(text)
     tts.save("speech.mp3")
     playsound("speech.mp3")
-

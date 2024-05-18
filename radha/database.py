@@ -4,10 +4,16 @@ from internet import check_internet_connection
 
 def create_connection():
     # Connect to the PostgreSQL server
+    # connection = psycopg2.connect(database = "radha-ai", 
+    #                     user = "avcdev", 
+    #                     host= 'localhost',
+    #                     password = "avc2019",
+    #                     port = 5432)
+    
     connection = psycopg2.connect(database = "radha-ai", 
-                        user = "avcdev", 
+                        user = "avc", 
                         host= 'localhost',
-                        password = "avc2019",
+                        password = "avcpass",
                         port = 5432)
 
     return connection
@@ -40,7 +46,7 @@ def insert_question_and_answer(question, answer):
     con.commit()
         
 # print(get_ans_from_memory("name"))  
-# insert_question_and_answer("what is date",'tell date')
+# insert_question_and_answer("close browser",'close browser')
 
 def get_name():
     con = create_connection()
