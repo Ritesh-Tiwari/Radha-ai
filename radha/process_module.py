@@ -5,6 +5,9 @@ from input_module import take_input
 from internet import check_internet_connection, check_on_wikipedia
 import assistant_details
 from web_job import *
+from music import *
+from news import get_news
+
 
 def process(query):
     answer = get_ans_from_memory(query)
@@ -40,6 +43,26 @@ def process(query):
     elif answer == "close browser":
         close_browser()
         return "closing browser"
+    elif answer == "play music":
+        return play_music()
+    
+    elif answer == "pause music":
+        return pause_music()
+    
+    elif answer == "stop music":
+        return stop_music()
+    
+    elif answer == "next song":
+        return next_song()
+    
+    elif answer == "previous song":
+        return previous_song()
+    
+    elif answer == "play":
+        return play_specific_song(query)
+
+    elif answer == 'get news':
+        return get_news()
     
     elif answer == "change name":
         output ("Okay! what to you want to call me")

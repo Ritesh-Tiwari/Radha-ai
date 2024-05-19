@@ -1,21 +1,61 @@
-import vlc
-import time
+import os
+import assistant_details as ad
+import file_search
 
-# Function to play a song
-music_file = 'Gulabi-Sadi_320(PaglaSongs).mp3'
-instance = vlc.Instance('--input-repeat=-1', '--fullscreen')
 
-# Create media player
-player = instance.media_player_new()
+music_path = "/home/avc/Desktop/radha-ai/songs/"
 
-# Load the MP3 file
-media = instance.media_new(music_file)
-player.set_media(media)
+def play_music():
+    if ad.is_ubuntu:
+        os.system('rhythmbox-client --play')
+        return "Playing Music"
+    else:
+        return "For windows not avilable yet"
 
-# Start playing
-player.play()
+def pause_music():
+    if ad.is_ubuntu:
+        os.system('rhythmbox-client --pause')
+        return "pause Music"
+    else:
+        return "For windows not avilable yet"
 
-# Wait for playback to finish
-while player.is_playing():
-    pass
+def stop_music():
+    if ad.is_ubuntu:
+        os.system('rhythmbox-client --stop')
+        return "Music stopped"
+    else:
+        return "For windows not avilable yet"
 
+def next_song():
+    if ad.is_ubuntu:
+        os.system('rhythmbox-client --next')
+        return "playing next song"
+    else:
+        return "For windows not avilable yet"
+
+def previous_song():
+    if ad.is_ubuntu:
+        os.system('rhythmbox-client --previous')
+        return "playing previous song"
+    else:
+        return "For windows not avilable yet"
+
+def play_specific_song(song_name):
+    song_name=song_name.replace('play','')
+    
+    if ad.is_ubuntu:
+        file_search.set_root(music_path)
+        songs = file_search.searchFile(song_name)
+        try:
+            song_uri = songs[0]
+            command = 'rhythmbox-client --play-uri="'+ song_uri + '"'
+            os.system(command)
+            return "playing" + song_name
+        except:
+            return "song not found in your computer"
+        return "playing "+ song_name
+     
+    else:
+        return "For windows not avilable yet"
+
+# play_specific_song("do-you-know")

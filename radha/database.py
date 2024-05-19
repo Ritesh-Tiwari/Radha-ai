@@ -46,7 +46,7 @@ def insert_question_and_answer(question, answer):
     con.commit()
         
 # print(get_ans_from_memory("name"))  
-# insert_question_and_answer("close browser",'close browser')
+insert_question_and_answer("pause music",'pause music')
 
 def get_name():
     con = create_connection()
