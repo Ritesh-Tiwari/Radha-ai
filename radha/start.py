@@ -13,7 +13,10 @@ greet()
 while(True):
     i = take_input()
     o = process (i)
-    output(o)
+    if o == "ignore":
+        print ("ignoring....\n")
+    else:
+        output(o)
 
 
 

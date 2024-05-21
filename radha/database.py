@@ -4,17 +4,17 @@ from internet import check_internet_connection
 
 def create_connection():
     # Connect to the PostgreSQL server
-    # connection = psycopg2.connect(database = "radha-ai", 
-    #                     user = "avcdev", 
-    #                     host= 'localhost',
-    #                     password = "avc2019",
-    #                     port = 5432)
-    
     connection = psycopg2.connect(database = "radha-ai", 
-                        user = "avc", 
+                        user = "avcdev", 
                         host= 'localhost',
-                        password = "avcpass",
+                        password = "avc2019",
                         port = 5432)
+    
+    # connection = psycopg2.connect(database = "radha-ai", 
+    #                     user = "avc", 
+    #                     host= 'localhost',
+    #                     password = "avcpass",
+    #                     port = 5432)
 
     return connection
     
