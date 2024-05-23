@@ -1,7 +1,8 @@
 from database import create_connection
 from output_module import output
+import datetime
 
-# from output_module import output
+class TodoMoudle():
     # todo : 
     # 1 . add new task
     # 2 . get all task
@@ -19,7 +20,6 @@ from output_module import output
     # update_due_date(due_date)
     # update_status(status)
 
-class TodoMoudle():
     def get_all_todo():
         
         conn = create_connection()
@@ -28,13 +28,33 @@ class TodoMoudle():
 
         return cur.fetchall()
         
+    def todayTodo():
+        conn = create_connection()
+        cur =conn.cursor()
+        cur.execute("select * from todo_list where due_date ='"+str(datetime.datetime.now().date())+"'")
+        return cur.fetchall()
+    
+    def tomorrowTodo():
+        conn = create_connection()
+        cur =conn.cursor()
+        next_day = datetime.datetime.now().date() + datetime.timedelta(days=1)
+        cur.execute("select * from todo_list where due_date ='"+str(next_day)+"'")
+        return cur.fetchall()
+   
+    def dueTodo():
+        conn = create_connection()
+        cur =conn.cursor()
+        yesterday = datetime.datetime.now().date() - datetime.timedelta(days=1)
+        cur.execute("select * from todo_list where due_date ='"+str(yesterday)+"'")
+        return cur.fetchall() 
+        
     def addTodo():
-        print("Enter Task Name :")
-        task_name = str(input())
-        print("Enter due date (yyyy-mm-dd) ")
-        due_date = str(input())
-        print("status :")
-        status = str(input())
+        output("Enter Task Name...")
+        task_name = str(input("Name of the Task : "))
+        output("Enter due date... ")
+        due_date = str(input('Due Date (yyyy-mm-dd) : '))
+        output("status...")
+        status = str(input("Status : "))
         con = create_connection()
         cur = con.cursor()
 
@@ -42,8 +62,23 @@ class TodoMoudle():
         query = "INSERT INTO todo_list (task, due_date, status) VALUES('"+task_name+"','"+ due_date +"','"+ status +"')"
         cur.execute(query)
         con.commit()
-        print ("New task added ")
+        return "New task added "
+
+    def deleteTodo():
+        todos = TodoMoudle.get_all_todo()
+        for i in todos:
+            print( f"\nID. {i[0]}, {i[1]}, due date {i[2]} and status {i[3]}")
+        output("Which task do you want to delete ? ")
+        tod_id = input("Task No. : ")
+        con = create_connection()
+        cur = con.cursor()
+        query = "delete from todo_list where id = "+ tod_id
+        cur.execute(query)
+        con.commit()
+        return "Task Deleted. Sir"
+
 
 # a = TodoMoudle.get_all_todo()
 # for i in a:
 #     output(f"No. {i[0]}, {i[1]}, due date is {i[2]} and status {i[3]}")
+# print(TodoMoudle.tomorrowTodo())

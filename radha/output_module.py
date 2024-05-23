@@ -6,7 +6,7 @@ from database import speak_is_on
 def output(o):
 
     # print command line
-    print (assistant_details.name +" : " + o)
+    print (f"\n{ assistant_details.name} : {o}")
     print()
 
     if speak_is_on():

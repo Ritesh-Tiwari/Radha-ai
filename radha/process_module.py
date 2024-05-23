@@ -11,6 +11,8 @@ from news import get_news
 from word_bank import *
 from weather_report_module import get_weather_report
 from todo_module import TodoMoudle
+import time
+
 def process(query):
 
     if "radha" in query.lower():
@@ -98,12 +100,44 @@ def process(query):
                 assistant_details.name = temp
                 return "Now you can call me "+ temp
         
-        elif answer == "get all to do":
+        # Todo Work :
+        elif answer == "today todo" or "today task" in query:
+            today_tasks = TodoMoudle.todayTodo()
+            if len(today_tasks)==0:
+                return "Today you don't have any task"
+            else:
+                for i in today_tasks:
+                    output( f"Task No. {i[0]}, {i[1]} and status {i[3]}")
+                return "that's it"
+        
+        elif answer == "tomorrow todo" or "next day task" in query:
+            tomorrow_tasks = TodoMoudle.tomorrowTodo()
+            if len(tomorrow_tasks)==0:
+               return "Today you don't have any task"
+            else:
+                for i in tomorrow_tasks:
+                    output( f"Task No. {i[0]}, {i[1]} and status {i[3]}")
+                return "that's it"
+
+
+        elif answer == "get all to do" :
             output ('Okay Sir, connecting your to do list')
             todos = TodoMoudle.get_all_todo()
             for i in todos:
-                return f"id {i[0]}, task name {i[1]}, due date {i[2]} and status {i[3]}"
+                output( f"Task No. {i[0]}, {i[1]}, due date {i[2]} and status {i[3]}")
+            return "that's it"
 
+        elif answer == "add new task" or 'new task' in query:
+            output ('Okay Sir, connecting your to do list')
+            time.sleep(2)
+            output ('Okay i am ready to add new task...')
+            return TodoMoudle.addTodo()
+        
+        elif answer == "delete task" or 'delete task' in query:
+            output ('Okay Sir, connecting your to do list')
+            time.sleep(2)
+            return TodoMoudle.deleteTodo()
+        
 
         else:
             if answer == "":

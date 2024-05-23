@@ -1,3 +1,4 @@
-import output_module
+import datetime
 
-output_module.output("Hello radha")
+
+print(datetime.datetime.now().date())
