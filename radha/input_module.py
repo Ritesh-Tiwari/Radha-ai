@@ -3,6 +3,7 @@ import speech_recognition as sr # for add commands
 
 def take_input():
     query = input("User : ")
+    
     # r = sr.Recognizer()
     # with sr.Microphone() as source:
     #     print("Listening...")

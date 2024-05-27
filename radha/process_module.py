@@ -19,6 +19,9 @@ def process(query):
         query = query.replace('radha','')
         query = query.strip()
 
+        # Storing command history
+        insertSearchHistory(1,query)
+   
         #  when some one greet radha 
         if any(greeting in query.lower() for greeting in hello_list):
             output("Hello Sir, how can I help you?")

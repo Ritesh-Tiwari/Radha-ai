@@ -17,7 +17,86 @@ def create_connection():
     #                     port = 5432)
 
     return connection
+
+def getUser(username):
+    con = create_connection()
+    cur = con.cursor()
+    cur.execute(f"select * from users where username='{username}'")
+    return cur.fetchall()[0][1]
+
+def getUserID(username):
+    con = create_connection()
+    cur = con.cursor()
+    cur.execute(f"select * from users where username='{username}'")
+    return cur.fetchall()[0][0]
+
+
+def getLastLogin(username):
+    con = create_connection()
+    cur = con.cursor()
+    cur.execute(f"select * from last_login where user_id ='{getUserID(username)}")
+    return cur.fetchall()[0][2]
+
+
+def updatePassword(username, password):
     
+    con = create_connection()
+    cur = con.cursor()
+    
+    query = "update users set password = '"+password+"' where username='"+username+"'"
+    try:
+        cur.execute(query)
+        con.commit()
+        
+    except Exception as e:
+        # Handle any database errors
+        print(f"An error occurred: {e}")
+        con.rollback()
+    finally:
+        # Ensure the connection is closed
+        if con:
+            con.close()
+
+def login(username, password):
+    con = create_connection()
+    cur = con.cursor()
+    cur.execute(f"select * from users where username='{username}' and password ='{password}'")
+
+    return cur.fetchall()
+
+def addNewUser(username,email, password):
+    con = create_connection()
+    cur = con.cursor()
+    try:
+        cur.execute(f"INSERT INTO users (username, email, password) VALUES ('{username}', '{email}', '{password}')")
+        con.commit()
+    except Exception as e:
+        # Handle any database errors
+        print(f"An error occurred: {e}")
+        con.rollback()
+
+    finally:
+        # Ensure the connection is closed
+        if con:
+            con.close()
+    
+def deleteUser(username):
+    con = create_connection()
+    cur = con.cursor()
+    try:
+        cur.execute(f"delete from users where username ='{username}")
+        con.commit()
+        
+    except Exception as e:
+        # Handle any database errors
+        print(f"An error occurred: {e}")
+        con.rollback()
+    finally:
+        # Ensure the connection is closed
+        if con:
+            con.close()
+
+
 def get_questions_and_answers():
     con = create_connection()
     cur = con.cursor()
@@ -40,13 +119,20 @@ def insert_question_and_answer(question, answer):
     con = create_connection()
     cur = con.cursor()
 
-    # Insert new data
-    query = "INSERT INTO qusandans VALUES('"+ question+"','"+ answer +"')"
-    cur.execute(query)
-    con.commit()
-        
-# print(get_ans_from_memory("name"))  
-
+    try:
+        # Insert new data
+        query = "INSERT INTO qusandans VALUES('"+ question+"','"+ answer +"')"
+        cur.execute(query)
+        con.commit()
+    except Exception as e:
+        # Handle any database errors
+        print(f"An error occurred: {e}")
+        con.rollback()
+    finally:
+        # Ensure the connection is closed
+        if con:
+            con.close()
+    
 def get_name():
     con = create_connection()
     cur = con.cursor()
@@ -122,3 +208,25 @@ def speak_is_on():
         return True
     else:
         return False
+    
+
+def insertSearchHistory(user_id, searchQuery):
+    con = create_connection()
+    cur = con.cursor()
+
+    try:
+        # Using parameterized query to prevent SQL injection
+        query = f"INSERT INTO commands (user_id, command_text) VALUES ({user_id},'{searchQuery}')"
+        cur.execute(query)
+        
+        # Commit the transaction
+        con.commit()
+
+       
+    except Exception as e:
+        # Handle any database errors
+        print(f"An error occurred: {e}")
+    finally:
+        # Ensure the connection is closed
+        if con:
+            con.close()
